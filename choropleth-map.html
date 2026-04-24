@@ -52,7 +52,8 @@
       .map-subtitle {
         margin: 0 0 0.75rem;
         color: var(--muted);
-        font-size: 0.95rem;
+        font-size: 0.93rem;
+        letter-spacing: 0.01em;
       }
 
       #map {
@@ -212,9 +213,9 @@
         border: 1px solid rgba(203, 213, 225, 0.32);
         box-shadow: 0 10px 22px rgba(2, 6, 23, 0.3);
         font-family: "Inter", system-ui, sans-serif;
-        font-size: 0.77rem;
+        font-size: 0.78rem;
         line-height: 1.4;
-        padding: 7px 9px;
+        padding: 8px 10px;
       }
 
       .state-tooltip strong {
@@ -222,37 +223,10 @@
         margin-bottom: 3px;
       }
 
-      .hover-chip {
-        position: absolute;
-        z-index: 900;
-        pointer-events: none;
-        background: rgba(255, 255, 255, 0.96);
-        border: 1px solid #dbeafe;
-        border-radius: 10px;
-        box-shadow: 0 8px 18px rgba(15, 23, 42, 0.15);
-        padding: 6px 9px;
-        font-size: 0.73rem;
-        line-height: 1.3;
-        color: #0f172a;
-        min-width: 156px;
-        opacity: 0;
-        transform: translate3d(0, 0, 0);
-        transition: opacity 0.14s ease;
-      }
-
-      .hover-chip.show {
-        opacity: 1;
-      }
-
-      .hover-chip .chip-name {
-        font-weight: 700;
-        margin-bottom: 2px;
-      }
-
       .map-footer {
-        margin-top: 0.72rem;
+        margin-top: 0.78rem;
         color: #334155;
-        font-size: 0.8rem;
+        font-size: 0.79rem;
         display: flex;
         flex-wrap: wrap;
         gap: 0.65rem 1.1rem;
@@ -269,7 +243,7 @@
         }
 
         .legend-control {
-          width: 230px;
+          width: 220px;
         }
       }
     </style>
@@ -278,9 +252,7 @@
     <main class="page">
       <h1 class="map-title">Peptide &amp; Wellness Supplement Interest by U.S. State</h1>
       <p class="map-subtitle">Based on Google Trends Search Interest Index, 2024</p>
-      <section id="map" aria-label="Interactive choropleth map of U.S. states">
-        <div id="hoverChip" class="hover-chip" aria-hidden="true"></div>
-      </section>
+      <section id="map" aria-label="Interactive choropleth map of U.S. states"></section>
       <footer class="map-footer">
         <span
           >Source: Google Trends Search Interest Index (2024) | CDC NHANES Supplement Data
@@ -394,7 +366,6 @@
       let geojsonLayer;
       let selectedLayer = null;
       const mapElement = document.getElementById("map");
-      const hoverChip = document.getElementById("hoverChip");
       let mapActiveTimer;
 
       function setMapActive() {
@@ -403,22 +374,6 @@
         mapActiveTimer = setTimeout(() => {
           mapElement.classList.remove("map-active");
         }, 1800);
-      }
-
-      function updateHoverChip(stateName, score, category, event) {
-        hoverChip.innerHTML = `
-          <div class="chip-name">${stateName}</div>
-          <div>Score: <strong>${typeof score === "number" ? score : "N/A"}</strong></div>
-          <div>${category}</div>
-        `;
-        const point = map.latLngToContainerPoint(event.latlng);
-        hoverChip.style.left = `${Math.min(point.x + 14, mapElement.clientWidth - 176)}px`;
-        hoverChip.style.top = `${Math.max(point.y - 16, 12)}px`;
-        hoverChip.classList.add("show");
-      }
-
-      function hideHoverChip() {
-        hoverChip.classList.remove("show");
       }
 
       const infoControl = L.control({ position: "bottomleft" });
@@ -471,7 +426,6 @@
           return;
         }
         geojsonLayer.resetStyle(layer);
-        hideHoverChip();
       }
 
       function highlightFeature(event) {
@@ -551,19 +505,12 @@
             sticky: true,
             className: "state-tooltip",
             direction: "top",
-            offset: [0, -6],
+            offset: [0, -10],
           }
         );
 
         layer.on({
-          mouseover: (event) => {
-            highlightFeature(event);
-            updateHoverChip(stateName, score, category, event);
-          },
-          mousemove: (event) => {
-            updateHoverChip(stateName, score, category, event);
-            setMapActive();
-          },
+          mouseover: highlightFeature,
           mouseout: resetHighlight,
           click: (event) => {
             zoomToFeature(event);
