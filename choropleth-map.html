@@ -61,34 +61,60 @@
         min-height: 620px;
         border: 1px solid var(--border);
         border-radius: 12px;
-        box-shadow: 0 10px 30px rgba(2, 6, 23, 0.08);
+        box-shadow: 0 14px 32px rgba(2, 6, 23, 0.1);
         overflow: hidden;
-        background: #eef2f7;
+        background: #f1f5f9;
       }
 
       .leaflet-container {
         font-family: "Inter", system-ui, sans-serif;
       }
 
+      .leaflet-control {
+        margin: 14px !important;
+      }
+
+      .leaflet-control-zoom {
+        border: 1px solid var(--border) !important;
+        border-radius: 10px !important;
+        overflow: hidden;
+        box-shadow: 0 6px 18px rgba(15, 23, 42, 0.11);
+      }
+
+      .leaflet-control-zoom a {
+        width: 30px !important;
+        height: 30px !important;
+        line-height: 30px !important;
+        color: #0f172a !important;
+        border: 0 !important;
+      }
+
+      .leaflet-control-attribution {
+        background: rgba(248, 250, 252, 0.9) !important;
+        color: #334155 !important;
+        font-size: 0.68rem !important;
+        padding: 2px 6px !important;
+      }
+
       .leaflet-interactive {
-        transition: fill 0.25s ease, fill-opacity 0.25s ease, stroke-width 0.2s ease;
+        transition: fill 0.24s ease, fill-opacity 0.24s ease, stroke-width 0.2s ease;
       }
 
       .card-control {
         background: var(--card-bg);
         color: var(--text);
         border: 1px solid var(--border);
-        border-radius: 10px;
-        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
+        border-radius: 12px;
+        box-shadow: 0 10px 24px rgba(15, 23, 42, 0.1);
       }
 
       .legend-control {
-        padding: 10px 12px;
-        width: 250px;
+        padding: 10px 13px;
+        width: 262px;
       }
 
       .legend-title {
-        margin: 0 0 8px;
+        margin: 0 0 7px;
         font-size: 0.86rem;
         font-weight: 700;
       }
@@ -115,7 +141,7 @@
         margin: 0;
         padding: 0;
         list-style: none;
-        font-size: 0.67rem;
+        font-size: 0.66rem;
         color: #334155;
       }
 
@@ -174,20 +200,20 @@
       }
 
       .state-tooltip {
-        background: rgba(15, 23, 42, 0.96);
+        background: rgba(15, 23, 42, 0.97);
         color: #f8fafc;
         border-radius: 8px;
-        border: none;
-        box-shadow: 0 8px 20px rgba(2, 6, 23, 0.28);
+        border: 1px solid rgba(203, 213, 225, 0.32);
+        box-shadow: 0 10px 22px rgba(2, 6, 23, 0.3);
         font-family: "Inter", system-ui, sans-serif;
-        font-size: 0.78rem;
-        line-height: 1.35;
-        padding: 8px 10px;
+        font-size: 0.77rem;
+        line-height: 1.4;
+        padding: 7px 9px;
       }
 
       .state-tooltip strong {
         display: block;
-        margin-bottom: 2px;
+        margin-bottom: 3px;
       }
 
       .map-footer {
@@ -388,9 +414,9 @@
       function highlightFeature(event) {
         const layer = event.target;
         layer.setStyle({
-          weight: 2,
-          color: "#0b2545",
-          fillOpacity: 0.95,
+          weight: 1.8,
+          color: "#0a2b52",
+          fillOpacity: 0.96,
         });
         layer.bringToFront();
       }
@@ -416,8 +442,8 @@
         }
         selectedLayer = layer;
         layer.setStyle({
-          weight: 2.6,
-          color: "#081f3f",
+          weight: 2.25,
+          color: "#061c38",
           fillOpacity: 1,
         });
         map.fitBounds(layer.getBounds(), {
@@ -493,7 +519,7 @@
                 weight: 1,
                 opacity: 1,
                 color: "#ffffff",
-                fillOpacity: 0.86,
+                fillOpacity: 0.9,
               };
             },
             onEachFeature,
