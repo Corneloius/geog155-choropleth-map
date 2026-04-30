@@ -20,6 +20,3 @@ Choropleth — regions colored by quantitative intensity using a single-hue navy
 
 ## Tech Stack
 HTML + Leaflet.js + Vanilla JS — no build tools required.
-
-## Repository
-https://github.com/Corneloius/geog155-choropleth-map
